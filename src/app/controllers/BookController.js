@@ -38,7 +38,7 @@ class BookController {
           ],
         };
 
-      const total = await Book.count({ where });
+      const total = await Book.count({ where: clausWhere });
 
       const books = await Book.findAll({
         offset,
