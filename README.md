@@ -19,7 +19,7 @@ yarn ou npm install
 Esse comando roda a migration `books` e seed.
 
 ```
-yarn init
+yarn configs
 ```
 
 Após todas as configurações feitas, rodar o projeto com o comando abaixo.
