@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "predev": "yarn sequelize db:migrate",
+    "init": "yarn sequelize db:migrate && yarn sequelize db:seed:all",
     "dev": "nodemon src/server.js"
   },
   "dependencies": {

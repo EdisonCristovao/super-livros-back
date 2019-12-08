@@ -1,5 +1,5 @@
 // import * as Yup from 'yup';
-import { Op } from 'sequelize';
+import { Op, fn, col, where } from 'sequelize';
 import { parseISO, startOfYear, endOfYear } from 'date-fns';
 
 import Book from '../models/Book';
@@ -16,22 +16,22 @@ class BookController {
   }
 
   async index(req, res) {
-    const { filter, page = 0, pageSize, dateFrom, dateTo } = req.query;
+    const { filter, page, pageSize, dateFrom, dateTo } = req.query;
     try {
-      const offset = page * pageSize;
-      const limit = offset + pageSize;
+      const offset = Number(page) * Number(pageSize);
+      const limit = Number(pageSize);
 
-      const where = {};
+      const clausWhere = {};
 
       if (filter)
-        where[Op.or] = [
-          { title: { [Op.like]: `%${filter}%` } },
-          { author: { [Op.like]: `%${filter}%` } },
-          { isbn: { [Op.like]: `%${filter}%` } },
+        clausWhere[Op.or] = [
+          where(fn('lower', col('title')), { [Op.like]: `%${filter}%` }),
+          where(fn('lower', col('author')), { [Op.like]: `%${filter}%` }),
+          where(fn('lower', col('isbn')), { [Op.like]: `%${filter}%` }),
         ];
 
       if (dateFrom && dateTo)
-        where.year = {
+        clausWhere.year = {
           [Op.between]: [
             startOfYear(parseISO(`${dateFrom}-01-01`)),
             endOfYear(parseISO(`${dateTo}-12-31`)),
@@ -43,7 +43,7 @@ class BookController {
       const books = await Book.findAll({
         offset,
         limit,
-        where,
+        where: clausWhere,
       });
 
       return res.json({ books, total, page });

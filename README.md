@@ -16,11 +16,19 @@ Para instalar todas as dependencias
 yarn ou npm install
 ```
 
-Esse comando roda o projeto. Rodara a migration `books` e seed, após isso, executará o projeto normalmente.
+Esse comando roda a migration `books` e seed.
+
+```
+yarn init
+```
+
+Após todas as configurações feitas, rodar o projeto com o comando abaixo.
 
 ```
 ỳarn dev
 ```
+
+back end roda na porta `3334`
 
 ## The feature overview
 
