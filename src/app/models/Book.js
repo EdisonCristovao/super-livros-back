@@ -12,6 +12,7 @@ class Book extends Model {
         language: Sequelize.STRING,
         weight: Sequelize.FLOAT,
         dimension: Sequelize.STRING,
+        img_url: Sequelize.STRING,
       },
       {
         sequelize,
